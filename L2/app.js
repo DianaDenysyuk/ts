@@ -52,20 +52,21 @@ var Client = /** @class */ (function (_super) {
     Client.prototype.ReadBook = function (title) {
         if (title == this.title) {
             if (this.clientsMoney >= this.bookPrice) {
-                console.log("Read book");
                 this.clientsMoney -= this.bookPrice;
+                console.log("Read book. Now your money: " + this.clientsMoney + "$");
             }
             else {
-                console.log("haven't got enough money");
+                console.log("haven't got enough money\nYour money: " + this.clientsMoney + "$, need: " + this.bookPrice + "$");
             }
         }
         else {
-            console.log("this book is not exsist");
+            console.log("this book is not exsist\nMaybe " + this.title + "?");
         }
     };
     Client.prototype.AddMoney = function (clientsMoney) {
         if (clientsMoney > 0) {
             this.clientsMoney += clientsMoney;
+            console.log("Add " + this.clientsMoney + "$");
         }
     };
     return Client;
