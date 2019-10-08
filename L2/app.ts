@@ -9,7 +9,7 @@ abstract class Librarry {
         this.director=director;
     }
 
-    public ShowLibrarryInfo(){
+    public ShowInfo(){
         console.log(`Librarry name: ${this.name}\nBooks count: ${this.bookCount}\nDirector: ${this.director}`);
     }
     
@@ -31,9 +31,9 @@ abstract class Librarry {
 }
 
 class Book extends Librarry{
-    private title: string;
-    private pageCount: number;
-    private bookPrice: number;
+    protected title: string;
+    protected pageCount: number;
+    protected bookPrice: number;
     constructor(name:string, bookCount: number, director: string, title: string, pageCount: number, bookPrice: number){
         super(name, bookCount, director);
         this.title = title;
@@ -41,13 +41,57 @@ class Book extends Librarry{
         this.bookPrice = bookPrice;
     }
 
-    ShowLibrarryInfo(){
+    ShowInfo(){
         console.log(`Librarry name: ${this.name}\nBooks count: ${this.bookCount}\nDirector: ${this.director}\nTitle: ${this.title}\nPage count: ${this.pageCount}\nBook price: ${this.bookPrice}$`);
     }
 }
 
-let HarryPotter = new Book("Rivne central", 1000, "Tim", "Harry Potter", 1000000, 200);
-HarryPotter.ShowLibrarryInfo();
+class Client extends Book{
+    private clientName: string;
+    private clientSurname: string;
+    private clientsMoney: number;
+    private pasportID: number;
+    constructor(name:string, bookCount: number, director: string, title: string, pageCount: number, bookPrice: number, clientName: string, clientSurname: string, clientsMoney: number, pasportID: number){
+        super(name, bookCount, director, title, pageCount, bookPrice);
+        this.clientName = clientName;
+        this.clientSurname = clientSurname;
+        this.clientsMoney = clientsMoney;
+        this.pasportID = pasportID;
+    }
+
+    ShowInfo(){
+        console.log(`Librarry name: ${this.name}\nBooks count: ${this.bookCount}\nDirector: ${this.director}\nTitle: ${this.title}\nPage count: ${this.pageCount}\nBook price: ${this.bookPrice}$\nClient name: ${this.clientName}\nClient surname: ${this.clientSurname}\nClients money: ${this.clientsMoney}$\nPasport ID: ${this.pasportID}`);
+    }
+    ReadBook(title : string){
+        if (title == this.title) {
+            if (this.clientsMoney >= this.bookPrice) {
+                console.log("Read book");
+                this.clientsMoney -= this.bookPrice;
+            }
+            else{
+                console.log("haven't got enough money");
+            }
+        }
+        else{
+            console.log("this book is not exsist");
+        }
+    }
+    AddMoney(clientsMoney : number){
+        if (clientsMoney > 0) {
+            this.clientsMoney += clientsMoney;
+        }
+    }
+}
+
+//let HarryPotter = new Book("Rivne central", 1000, "Tim", "Harry Potter", 1000000, 200);
+let person = new Client("Rivne central", 1000, "Tim", "Harry Potter", 1000000, 200, "Diana", "Den", 400, 1234542);
+person.ShowInfo();
+person.ReadBook("Harry Potter");
+person.ReadBook("Harry Potter");
+person.ReadBook("Harry Potter");
+person.AddMoney(300);
+person.ReadBook("Harry Potter");
+person.ShowInfo();
 // RivneLib.SetName("Lviv Medical");
 // RivneLib.SetBookCount(200000);
 // RivneLib.SetDirector("Sem");
